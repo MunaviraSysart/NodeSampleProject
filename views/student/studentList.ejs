@@ -1,0 +1,65 @@
+<div class="container mt-5">
+    <h2 class='title'>Student Details</h2>
+    <% 
+      if (succMessage.length > 0) { %>
+        <div class="alert alert-success">
+            <strong><%=succMessage %></strong>
+        </div>
+        <% } %>
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th class="text-center" style="width: 30px;">#</th>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Email</th>
+                    <th>Course</th>
+                    <th>Address</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody class="challengeUserListing">
+                <% for(i=0; i<students.length;i++){ %>
+                    <tr>
+                        <td class="text-center">
+                            <%=i+1%>
+                        </td>
+                        <td class="text-center">
+                            <%= students[i].fname%>
+                        </td>
+                        <td class="text-center">
+                            <%= students[i].phone%>
+                        </td>
+                        <td class="text-center">
+                            <%= students[i].email%>
+                        </td>
+                        <td class="text-center">
+                            <%= students[i].course%>
+                        </td>
+                        <td class="text-center">
+                            <%= students[i].address%>
+                        </td>
+                        <td>
+                            <a class="mx-2" href="/app/getStudent/<%=students[i]._id%>">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </a>
+                            <a class="mx-2" href="/app/deleteStudent/<%=students[i]._id%>">  
+                                <i class="fa fa-trash" aria-hidden="true" onclick="return confirm('Are you want to delete <%= students[i].fname%>?')"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    <%}%>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    window.setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 2500);
+
+</script>

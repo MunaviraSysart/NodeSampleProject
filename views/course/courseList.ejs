@@ -1,0 +1,180 @@
+<div class="container mt-5">
+    <div class='col-md-12'>
+        <button type="" class="btn btn-primary" style="float: right;" aria-hidden="true" data-toggle="modal"
+            data-target=".bs-example-modal-lg">ADD NEW</button>
+        <!-- <input type='submit' value='submit'> -->
+    </div>
+    <h2 class='title'>Course Details</h2>
+    <% if(errMessage.length> 0){ %>
+        <div class="alert alert-warning">
+            <strong>
+                <%=errMessage %>
+            </strong>
+        </div>
+        <% } else if (succMessage.length> 0) { %>
+            <div class="alert alert-success">
+                <strong>
+                    <%=succMessage %>
+                </strong>
+            </div>
+            <% } %>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="text-center" style="width: 30px;">#</th>
+                                <th>Course</th>
+                                <th>Duration</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(i=0; i<courses.length; i++) {%>
+                                <tr>
+                                    <td class="text-center">
+                                        <%= i+1%>
+                                    </td>
+                                    <td class="text-center">
+                                        <%= courses[i].course%>
+                                    </td>
+                                    <td class="text-center">
+                                        <%= courses[i].duration%>
+                                    </td>
+                                    <td class="text-center">
+                                        <%= courses[i].description%>
+                                    </td>
+                                    <td class="text-center">
+                                        <a class="mx-2">
+                                            <i class="fa fa-pencil updatecourse" title="Edit"  data-toggle="modal" data-target=".editModal" data-id=<%= courses[i]._id%>></i>
+                                        </a>
+                                        <a class="mx-2" href="/app/deleteCourse/<%=courses[i]._id%>">
+                                            <i class="fa fa-trash" aria-hidden="true"
+                                                onclick="return confirm('Are you want to delete <%=courses[i].course%> ?')"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                <%}%>
+
+                        </tbody>
+                    </table>
+                </div>
+</div>
+
+<!-- modal for add course -->
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myLargeModalLabel">
+                    ADD NEW COURSE
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="container">
+                    <form action="/app/course" method="POST">
+                        <div class="col-md-12">
+                            <div class='input-group mb-3'>
+                                <label class="form-label col-12">Course</label>
+                                <input type='text' class="form-control" name='course' placeholder="Enter course name"
+                                    required>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class='input-group mb-3'>
+                                <label class="form-label col-12">Duration</label>
+                                <input type='text' class="form-control" name='duration'
+                                    placeholder="Enter course duration" required>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class='input-group mb-3'>
+                                <label class="form-label col-12">Description</label>
+                                <textarea row="3" type='text' class="form-control" name='description'
+                                    placeholder="Enter course description" required></textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-right mb-3">
+                            <button type="reset" data-dismiss="modal"
+                                class="btn btn-secondary waves-effect mr-3">Cancel</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light"> Submit </button>
+                        </div>
+                </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- modal for edit course -->
+<div class="modal fade editModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title mt-0" id="myLargeModalLabel">
+                    EDIT COURSE
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true"> × </button>
+            </div>
+
+            <div class="modal-body">
+                <div class="container">
+                    <form action="/app/editCourse" method="post">
+                        <div class="col-md-12">
+                            <div class='input-group mb-3'>
+                                <label class="form-label col-12">Course</label>
+                                <input type='text' class="form-control" name="course" id="course" required>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class='input-group mb-3'>
+                                <label class="form-label col-12">Duration</label>
+                                <input type='text' class="form-control" name='duration' id="duration" required>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class='input-group mb-3'>
+                                <label class="form-label col-12">Description</label>
+                                <textarea row="3" type='text' class="form-control" name='description' id="description" required></textarea>
+                            </div>
+                        </div>
+                        <!-- hidden textbox to pass id -->
+                      <div hidden>
+                        <input type="text" class="form-control" id="courseId" name="courseId"><br>
+                      </div>
+                      <!--  -->
+                        <div class="col-md-12 text-right mb-3">
+                            <button type="reset" data-dismiss="modal"
+                                class="btn btn-secondary waves-effect mr-3">Cancel</button>
+                            <button type="submit" class="btn btn-primary waves-effect waves-light"> Submit </button>
+                        </div>
+                </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../public/js/course_api.js"></script>
+
+</div>
+</div>
+
+<script>
+    window.setTimeout(function () {
+        $(".alert").fadeTo(500, 0).slideUp(500, function () {
+            $(this).remove();
+        });
+    }, 2500);
+
+</script>
+
